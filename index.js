@@ -16,6 +16,7 @@ const router = express.Router();
 app.post('/', (req, res, next) => {
   // check for secret token
   if (!req.body.token || req.body.token !== process.env.SECRET_TOKEN) next();
+  console.log('handling request', req.body);
   // grab status and clean it up
   let status = req.body.title;
   const dndToken = ' [DND]';
@@ -38,11 +39,11 @@ app.post('/', (req, res, next) => {
     profile: JSON.stringify({
       "status_text": `${status} from ${start.format('h:mm')} to ${end.format('h:mm a')} ${process.env.TIME_ZONE}`,
         "status_emoji": ":calendar:",
-        "status_expiration": end_unix
+        "status_expiration": end_unix,
     })
   });
   res.status(200);
-  res.send('🤘');
+  res.send('ok');
 });
 
 app.get('/', (req, res, next) => {
